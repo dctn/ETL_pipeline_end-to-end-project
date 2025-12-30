@@ -1,3 +1,4 @@
+import pandas as pd
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
@@ -16,6 +17,7 @@ try:
 except Exception as e:
     print(e)
 
-import certifi
-cert = certifi.where()
-print(cert)
+client = MongoClient(uri)
+collections = client['STRANGER']['PHISING']
+df = pd.DataFrame(list(collections.find()))
+print(df)
