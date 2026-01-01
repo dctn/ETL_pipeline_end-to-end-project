@@ -1,14 +1,14 @@
 from network_security.exception_handling.exception import SecurityException
 from network_security.logging import logger
-import sys
 from network_security.entity.config_entity import DataIngestionConfig
+from network_security.entity.artifact_entity import DataIngestionArtifact
+import sys
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 import pymongo
 from dotenv import load_dotenv
 import os
-from network_security.entity.artifact_entity import DataIngestionArtifact
 
 load_dotenv()
 
@@ -63,7 +63,6 @@ class DataIngestion:
             train_set, test_set = train_test_split(df, test_size=split_ratio)
 
             dir_path = os.path.dirname(self.data_ingestion_config.training_file_path)
-            print(dir_path)
             os.makedirs(dir_path, exist_ok=True)
 
             train_set.to_csv(self.data_ingestion_config.training_file_path)
