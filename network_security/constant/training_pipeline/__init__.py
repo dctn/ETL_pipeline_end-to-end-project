@@ -3,8 +3,9 @@
 Define some common constant variable for training pipeline
 """
 import os
+import numpy as np
 
-TARGET_COLUMN_NAME:str = "result"
+TARGET_COLUMN_NAME:str = "Result"
 PIPELINE_NAME:str = "PHISING"
 ARTIFACT_DIR:str = "artifacts"
 FILE_NAME:str = "phisingData.csv"
@@ -33,7 +34,15 @@ DATA_VALIDATION_DRIFT_REPORT_DIR:str = "drift_reports"
 DATA_VALIDATION_DRIFT_REPORT_FILE_NAME:str = "drift_report.yaml"
 
 
-
-
-
-
+"""
+Data Transformation VAR with DATA_TRANSFORMATION
+"""
+DATA_TRANSFORMATION_DIR_NAME:str = "data_transformation"
+DATA_TRANSFORMATION_TRANSFORMED_DIR:str = "transformed"
+DATA_TRANSFORMATION_OBJECTS_DIR:str = "transformed_objects"
+DATA_TRANSFORMATION_OBJECT_FILE_NAME = "transformed_object.pkl"
+DATA_TRANSFORMATION_KNN_IMPUTER_PARAMS:dict = {
+    "missing_values":np.nan,
+    "n_neighbors":4,
+    "weights":"uniform",
+}
