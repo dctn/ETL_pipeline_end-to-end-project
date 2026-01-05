@@ -3,10 +3,12 @@ import sys
 from network_security.compontents.data_ingestion import DataIngestion
 from network_security.compontents.data_validation import DataValidation
 from network_security.compontents.data_transformation import DataTransformation
+from network_security.compontents.model_trainer import ModelTrainer
+
 from network_security.logging import logger
 from network_security.exception_handling.exception import SecurityException
 from network_security.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig
-from network_security.entity.config_entity import TrainingPipelineConfig
+from network_security.entity.config_entity import TrainingPipelineConfig,ModelTrainingConfig
 
 from network_security.utils.utils import generate_schema_yaml
 
@@ -39,6 +41,12 @@ if __name__ == "__main__":
                                                  data_transformation_config=data_transformation_config)
         data_transformation_artifact = data_transformation.initiated_data_transformation()
         logger.logging.info("Data Transformation completed...")
+
+        logger.logging.info("Model training started...")
+        model_trainer_config = ModelTrainingConfig(training_pipeline_config)
+        model_trainer = ModelTrainer(model_trainer_config=model_trainer_config,data_transforming_artifact=data_transformation_artifact)
+        model_trainer.initialize_model_trainer()
+        logger.logging.info("Model training completed...")
 
     except Exception as e:
         raise SecurityException(e,sys)

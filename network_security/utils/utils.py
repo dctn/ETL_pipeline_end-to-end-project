@@ -3,6 +3,8 @@ import pickle
 import sys
 
 import numpy as np
+from sklearn.metrics import r2_score
+from sklearn.model_selection import GridSearchCV
 
 from network_security.logging import logger
 from network_security.exception_handling.exception import SecurityException
@@ -59,6 +61,12 @@ def save_file_as_np(file_path:str, array:np.ndarray)->None:
     except Exception as e:
         raise SecurityException(e,sys)
 
+def load_np_arr_file(file_path:str)->np.ndarray:
+    try:
+        with open(file_path, 'rb') as f:
+            return np.load(file_path)
+    except Exception as e:
+        raise SecurityException(e,sys)
 
 def save_pkl_file(file_path:str, obj:object)->None:
     try:
@@ -71,9 +79,41 @@ def save_pkl_file(file_path:str, obj:object)->None:
         raise SecurityException(e,sys)
 
 
+def load_pkl_file(file_path:str)->object:
+    try:
+        with open(file_path, 'rb') as f:
+            return pickle.load(f)
+    except Exception as e:
+        raise SecurityException(e,sys)
 
 
+def evalulate_models(models,params,x_train,y_train,x_test,y_test):
+    try:
+        report = {}
 
+        for model_name,model in models.items():
+
+            param = params[model_name]
+
+            grid_search = GridSearchCV(estimator=model, param_grid=param)
+            grid_search.fit(x_train, y_train)
+
+            model.set_params(**grid_search.best_params_)
+            model.fit(x_train, y_train)
+
+            y_trian_pred = model.predict(x_train)
+            y_test_pred = model.predict(x_test)
+
+            X_train_score = r2_score(y_train, y_trian_pred)
+            X_test_score = r2_score(y_test, y_test_pred)
+
+            report.update({
+                model_name: X_test_score,
+            })
+
+        return report
+    except Exception as e:
+        raise SecurityException(e,sys)
 
 
 

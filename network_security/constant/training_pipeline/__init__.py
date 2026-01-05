@@ -46,3 +46,26 @@ DATA_TRANSFORMATION_KNN_IMPUTER_PARAMS:dict = {
     "n_neighbors":4,
     "weights":"uniform",
 }
+
+"""
+Model Training VAR with MODEL_TRAINER
+"""
+MODEL_TRAINER_DIR_NAME:str = "model_training"
+MODEL_TRAINED_DIR:str = "trained"
+MODEL_TRAINED_NAME_FILE_NAME:str = "trained_model.pkl"
+MODEL_TRAINED_EXPECTED_SCORE:float = 0.6
+MODEL_TRAINED_OVERFITTING_THRESHOLD:float = 0.2
+
+
+
+
+
+
+
+
+
+
+
+
+
+

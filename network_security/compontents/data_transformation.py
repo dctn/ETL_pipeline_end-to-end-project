@@ -28,6 +28,7 @@ class DataTransformation:
         try:
             logger.logging.info("Imputer object started...")
             knn_imputer = KNNImputer(**DATA_TRANSFORMATION_KNN_IMPUTER_PARAMS)
+            logger.logging.info(f"Imputer object finished with {knn_imputer.get_params()}")
             return knn_imputer
         except Exception as e:
             raise SecurityException(e,sys)
